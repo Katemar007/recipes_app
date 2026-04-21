@@ -1,0 +1,128 @@
+{
+  "version": 1,
+  "description": "Portable demo seed: ingredient section catalog + recipes for SQLite or Postgres import.",
+  "ingredient_sections": [
+    { "id": 0, "title": "", "position": 0 },
+    { "id": 1, "title": "Batter", "position": 0 },
+    { "id": 2, "title": "Topping", "position": 0 },
+    { "id": 3, "title": "Soup", "position": 0 },
+    { "id": 4, "title": "Chicken", "position": 0 },
+    { "id": 5, "title": "Fish", "position": 0 },
+    { "id": 6, "title": "Salad", "position": 0 }
+  ],
+  "recipes": [
+    {
+      "title": "Weekend Pancakes",
+      "description": "Fluffy stack with quick topping.",
+      "directions": "Mix dry batter ingredients. Whisk wet, combine gently. Cook on griddle. Whip topping and serve.",
+      "notes": "Don’t overmix the batter.",
+      "category": "Breakfast",
+      "categories": ["Breakfast", "Desserts"],
+      "keywords": ["Breakfast", "Desserts", "weekend", "sweet"],
+      "prep_time_min": 15,
+      "cook_time_min": 20,
+      "servings": 4.0,
+      "status": "library",
+      "nutrition": {
+        "kcal": 320,
+        "protein_g": 8,
+        "carbs_g": 42,
+        "fat_g": 14,
+        "per_100g_kcal": 210
+      },
+      "sections": [
+        { "key": "batter", "catalog_section_id": 1, "position": 0 },
+        { "key": "topping", "catalog_section_id": 2, "position": 1 }
+      ],
+      "ingredients": [
+        { "section_key": "batter", "position": 0, "line": "2 cup All-purpose flour" },
+        { "section_key": "batter", "position": 1, "line": "1 tbsp Baking powder" },
+        { "section_key": "topping", "position": 0, "line": "1 cup Heavy cream" },
+        { "section_key": "topping", "position": 1, "line": "2 tbsp Powdered sugar" }
+      ]
+    },
+    {
+      "title": "Lentil Soup",
+      "description": "Hearty one-pot dinner.",
+      "directions": "Sauté aromatics. Add lentils and broth. Simmer until tender.",
+      "notes": null,
+      "category": "Dinner",
+      "categories": ["Dinner", "Veggies"],
+      "keywords": ["Dinner", "Veggies", "vegan", "meal-prep", "soup"],
+      "prep_time_min": 10,
+      "cook_time_min": 35,
+      "servings": 6.0,
+      "status": "planned",
+      "nutrition": {
+        "kcal": 240,
+        "protein_g": 14,
+        "carbs_g": 36,
+        "fat_g": 4,
+        "per_100g_kcal": 95
+      },
+      "sections": [{ "key": "soup", "catalog_section_id": 3, "position": 0 }],
+      "ingredients": [
+        { "section_key": "soup", "position": 0, "line": "2 cup Red lentils" },
+        { "section_key": "soup", "position": 1, "line": "6 cup Vegetable broth" }
+      ]
+    },
+    {
+      "title": "Herb-Roasted Chicken Thighs",
+      "description": "Simple sheet-pan chicken dinner.",
+      "directions": "Pat chicken dry. Rub with oil, herbs, salt, and pepper. Roast at 425F until golden and cooked through.",
+      "notes": null,
+      "category": "Chicken",
+      "categories": ["Dinner", "Chicken", "Meat"],
+      "keywords": ["Dinner", "Chicken", "Meat"],
+      "prep_time_min": 10,
+      "cook_time_min": 35,
+      "servings": 4.0,
+      "status": "library",
+      "nutrition": {
+        "kcal": 520,
+        "protein_g": 42,
+        "carbs_g": 2,
+        "fat_g": 36,
+        "per_100g_kcal": 195
+      },
+      "sections": [{ "key": "chicken", "catalog_section_id": 4, "position": 0 }],
+      "ingredients": [
+        {
+          "section_key": "chicken",
+          "position": 0,
+          "line": "2 lb Chicken thighs, bone-in"
+        },
+        { "section_key": "chicken", "position": 1, "line": "2 tbsp Olive oil" }
+      ]
+    },
+    {
+      "title": "Citrus Salmon with Greens",
+      "description": "Light fish supper with salad.",
+      "directions": "Season salmon. Broil until flaky. Toss greens with lemon and olive oil. Serve together.",
+      "notes": null,
+      "category": "Fish",
+      "categories": ["Dinner", "Fish", "Salads"],
+      "keywords": ["Dinner", "Fish", "Salads"],
+      "prep_time_min": 15,
+      "cook_time_min": 12,
+      "servings": 2.0,
+      "status": "library",
+      "nutrition": {
+        "kcal": 430,
+        "protein_g": 38,
+        "carbs_g": 10,
+        "fat_g": 26,
+        "per_100g_kcal": 160
+      },
+      "sections": [
+        { "key": "fish", "catalog_section_id": 5, "position": 0 },
+        { "key": "salad", "catalog_section_id": 6, "position": 1 }
+      ],
+      "ingredients": [
+        { "section_key": "fish", "position": 0, "line": "12 oz Salmon fillets" },
+        { "section_key": "salad", "position": 0, "line": "6 cup Mixed greens" },
+        { "section_key": "salad", "position": 1, "line": "2 tbsp Lemon juice" }
+      ]
+    }
+  ]
+}
