@@ -1,0 +1,130 @@
+// Meal Planner — SQLite target (SQLAlchemy models in backend/app/db_models.py)
+// Visualize: https://dbdiagram.io — paste this file or import DBML
+// DBML docs: https://dbml.dbdiagram.io/docs
+
+Table categories {
+  id integer [primary key, increment]
+  name varchar [unique, not null, note: 'Linked via recipe_categories']
+}
+
+Table recipes {
+  id integer [primary key, increment]
+  user_id varchar [not null, default: 'demo-user', note: 'demo-user until real auth']
+  title varchar [not null]
+  description text
+  directions text
+  notes text
+  image_url text
+  source_url text
+  category varchar [not null, default: '', note: 'Denormalized primary label']
+  keywords_json text [not null, default: '[]']
+  prep_time_min integer
+  cook_time_min integer
+  servings float [not null, default: 1]
+  status varchar [not null, default: 'library', note: 'library | planned']
+  nutrition_json text
+  created_at varchar [not null, note: 'ISO-8601 string']
+}
+
+Table ingredient_sections {
+  id integer [primary key, note: '0 = shared default "Ingredients"']
+  title varchar [not null]
+  position integer [not null, default: 0, note: 'Catalog hint; per-recipe order on recipe_ingredients.section_position']
+}
+
+Table recipe_ingredients {
+  id integer [primary key, increment]
+  recipe_id integer [not null]
+  section_id integer [note: 'FK to shared catalog; SET NULL on section delete']
+  section_position integer [not null, default: 0, note: 'Section order within this recipe']
+  position integer [not null, default: 0]
+  line text [not null, note: 'Single ingredient string; no split qty/unit/name']
+}
+
+Table recipe_categories {
+  id integer [primary key, increment, note: 'Surrogate id for each recipe↔category link']
+  recipe_id integer [not null]
+  category_id integer [not null]
+
+  indexes {
+    (recipe_id, category_id) [unique, name: 'uq_recipe_categories_pair']
+  }
+}
+
+Table shopping_lists {
+  id varchar [primary key, note: 'Client id e.g. sl-active']
+  user_id varchar [not null, default: 'demo-user']
+  name varchar
+  status varchar [not null, note: 'active | saved']
+  saved_at varchar
+  list_date varchar
+  created_at varchar [not null]
+}
+
+Table shopping_list_items {
+  id varchar [primary key]
+  shopping_list_id varchar [not null]
+  name varchar [not null]
+  quantity float
+  unit varchar
+  category varchar
+  checked boolean [not null, default: false]
+  source_recipe_id integer [note: 'No DB FK — optional trace to recipes.id']
+  source_ingredient_id integer [note: 'No DB FK — optional trace to recipe_ingredients.id']
+  source_recipe_title varchar
+  is_manual boolean [not null, default: false]
+  position integer [not null, default: 0]
+}
+
+// --- Foreign keys (ORM / SQLite intent) ---
+
+Ref: recipe_ingredients.recipe_id > recipes.id [delete: cascade]
+
+Ref: recipe_ingredients.section_id > ingredient_sections.id [delete: set null]
+
+Ref: recipe_categories.recipe_id > recipes.id [delete: cascade]
+
+Ref: recipe_categories.category_id > categories.id [delete: cascade]
+
+Ref: shopping_list_items.shopping_list_id > shopping_lists.id [delete: cascade]
+
+// --- Example rows (optional; remove if you only want structure) ---
+
+records categories(id, name) {
+  1, 'Breakfast'
+  2, 'Desserts'
+  3, 'Dinner'
+}
+
+records recipes(id, user_id, title, status, servings, created_at) {
+  1, 'demo-user', 'Weekend Pancakes', 'library', 4, '2026-01-01T12:00:00Z'
+  2, 'demo-user', 'Lentil Soup', 'planned', 6, '2026-01-02T12:00:00Z'
+}
+
+records ingredient_sections(id, title, position) {
+  0, 'Ingredients', 0
+  1, 'Batter', 0
+  2, 'Topping', 0
+  3, 'Soup', 0
+}
+
+records recipe_ingredients(id, recipe_id, section_id, section_position, position, line) {
+  1, 1, 1, 0, 0, '2 cup All-purpose flour'
+  2, 1, 1, 0, 1, '1 tbsp Baking powder'
+  3, 1, 2, 1, 0, '1 cup Heavy cream'
+}
+
+records recipe_categories(id, recipe_id, category_id) {
+  1, 1, 1
+  2, 1, 2
+  3, 2, 3
+}
+
+records shopping_lists(id, user_id, name, status, created_at) {
+  'sl-active', 'demo-user', 'This week', 'active', '2026-03-01T10:00:00Z'
+}
+
+records shopping_list_items(id, shopping_list_id, name, checked, source_recipe_id, is_manual, position) {
+  'li-101', 'sl-active', 'Milk', false, null, true, 0
+  'li-102', 'sl-active', 'All-purpose flour', false, 1, false, 1
+}
