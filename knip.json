@@ -1,0 +1,12 @@
+{
+  "entry": ["app/**/*.tsx"],
+  "project": ["src/**/*.ts", "src/**/*.tsx", "app/**/*.tsx"],
+  "ignore": ["dist/**", ".expo/**"],
+  "ignoreDependencies": [
+    "@react-navigation/native",
+    "expo-updates",
+    "eslint-config-expo",
+    "eslint-plugin-react-hooks"
+  ],
+  "ignoreUnresolved": ["babel-preset-expo"]
+}
